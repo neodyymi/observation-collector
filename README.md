@@ -13,5 +13,17 @@ Reaktor 2018 summer - ennakkotehtävä
   * https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/location/
   * https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/observation/
 
+```
+  /
+    /location (GET, POST, DELETE)
+      /location/batch (POST)
+      /location/{id} (DELETE)
+        /location/{id}/observations (GET)
+    /observation (GET, POST, DELETE)
+      /observation/batch (POST)
+      /observation/{id} (GET, DELETE)
+```
+
+
 ## Author
 * Ville-Veikko Saari - [neodyymi](https://github.com/neodyymi)

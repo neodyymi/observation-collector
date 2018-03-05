@@ -23,7 +23,7 @@ def create_response(body=None, error=None):
 
 def lambda_handler(event, context): 
     dynamodb = boto3.resource('dynamodb', region_name='eu-west-1')
-    table = dynamodb.Table('reaktor-observations')
+    table = dynamodb.Table('reaktor-locations')
     
     body = json.loads(event['body'])
     
@@ -31,7 +31,7 @@ def lambda_handler(event, context):
         for item in body['Items']:
             if not item['xCoord'].replace('.','',1).lstrip('-+').isnumeric() or not item['yCoord'].replace('.','',1).lstrip('-+').isnumeric():
                 return create_response(error={'error': 'Invalid coordinates.', 'Item': item})
-            if not item['name'].isalnum():
+            if not item['name'].replace(" ", "").isalnum():
                 return create_response(error={'error': 'Location name must be alphanumeric', 'Item': item})
     
             batch.put_item(

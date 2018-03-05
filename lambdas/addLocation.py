@@ -27,7 +27,7 @@ def lambda_handler(event, context):
     item = json.loads(event['body'])['Item']
     if not item['xCoord'].replace('.','',1).lstrip('-+').isnumeric() or not item['yCoord'].replace('.','',1).lstrip('-+').isnumeric():
         return create_response(error={'error': 'Invalid coordinates.', 'item': item})
-    if not item['name'].isalnum():
+    if not item['name'].replace(" ", "").isalnum():
         return create_response(error={'error': 'Location name must be alphanumeric', 'item': item})
     
     newItem = {

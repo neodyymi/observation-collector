@@ -2,7 +2,7 @@ POST https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/location
 Content-Type: application/json
 
 {
-    "items": [
+    "Items": [
         {
             "name": "Tokio",
             "xCoord": "35.6584421",
