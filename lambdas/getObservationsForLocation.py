@@ -8,22 +8,22 @@ def lambda_handler(event, context):
     table = dynamodb.Table('reaktor-observations')
     location_id = event['pathParameters']['id']
     response = table.query(
-        IndexName='location-id-index',
-        KeyConditionExpression=Key('location-id').eq(location_id)
+        IndexName='locationId-index',
+        KeyConditionExpression=Key('locationId').eq(location_id)
     )
 
     while 'LastEvaluatedKey' in response:
         response = table.query(
-            IndexName='location-id-index',
-            KeyConditionExpression=Key('location-id').eq(location_id),
+            IndexName='locationId-index',
+            KeyConditionExpression=Key('locationId').eq(location_id),
             ExclusiveStartKey=response['LastEvaluatedKey']
         )
         data.extend(response['Items'])
     
     return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin" : "*",
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Origin' : '*',
         },
-        "body": json.dumps(response)
+        'body': json.dumps(response)
     }

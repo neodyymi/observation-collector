@@ -24,25 +24,28 @@ def create_response(body=None, error=None):
 def lambda_handler(event, context): 
     dynamodb = boto3.resource('dynamodb', region_name='eu-west-1')
     table = dynamodb.Table('reaktor-observations')
+    print(event)
+    item = json.loads(event['body'])['Item']
     
-    body = json.loads(event['body'])
+    if 'temperature' not in item or 'temperatureScale' not in item or 'locationId' not in item or 'temperature' not in item:
+        return create_response(error={'error':'Parameter missing', 'item': item})
     
-    with table.batch_writer() as batch:
-        for item in body['Items']:
-            if not item['temperature'].lstrip('-+').isnumeric():
-                return create_response(error={'error':'Temperature has to be numeric.'})
-            if item['temperatureScale'] != 'celcius' and item['temperatureScale'] != 'fahrenheit' :
-                return create_response(error={'error':'Temperature scale can only be fahrenheit or celcius'})
-            if not item['locationId'].isalnum():
-                return create_response(error={'error':'Invalid location id.'})
-            batch.put_item(
-                Item = {
+    if not item['temperature'].lstrip('-+').isnumeric():
+        return create_response(error={'error':'Temperature has to be numeric.'})
+    if item['temperatureScale'] != 'celcius' and item['temperatureScale'] != 'fahrenheit' :
+        return create_response(error={'error':'Temperature scale can only be fahrenheit or celcius'})
+    if not item['locationId'].isalnum():
+        return create_response(error={'error':'Invalid location id.'})
+    
+    newItem = {
                     'id': uuid.uuid1().hex,
                     'locationId': item['locationId'],
                     'timestamp': datetime.utcnow().isoformat()+'Z',
                     'temperature': item['temperature'],
                     'temperatureScale': item['temperatureScale']
                 }
-            )
+    table.put_item(
+        Item = newItem
+        )
     
-    return create_response(body={'message' : 'Observation(s) added.'})
+    return create_response(body={'message' : 'Observation added.', 'Item' : newItem})

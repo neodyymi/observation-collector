@@ -1,0 +1,22 @@
+POST https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/observation/batch
+Content-Type: application/json
+
+{
+    "Items": [
+        {
+            "locationId": "5f3c651020a311e8b30ff2fd28c29442",
+            "temperature": "15",
+            "temperatureScale": "celcius"
+        },
+        {
+            "locationId": "5f3c651020a311e8b30ff2fd28c29442",
+            "temperature": "-5",
+            "temperatureScale": "celcius"
+        },
+        {
+            "locationId": "5f3c651020a311e8b30ff2fd28c29442",
+            "temperature": "23",
+            "temperatureScale": "celcius"
+        }
+    ]
+}

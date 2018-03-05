@@ -1,0 +1,1 @@
+DELETE https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/observation/b199e058206211e8bfc326e84cc96c5e

@@ -1,0 +1,13 @@
+DELETE https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/observation/
+Content-Type: application/json
+
+{
+    "Items": [
+        {
+            "id": "1"
+        },
+        {
+            "id": "2"
+        }
+    ]
+}

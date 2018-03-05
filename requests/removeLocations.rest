@@ -1,0 +1,13 @@
+DELETE https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/location/
+Content-Type: application/json
+
+{
+    "Items": [
+        {
+            "id": "d16603f020a111e8a89786b57064a6e3"
+        },
+        {
+            "id": "cd79aa3020a111e8a89786b57064a6e3"
+        }
+    ]
+}

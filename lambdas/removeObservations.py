@@ -5,17 +5,17 @@ def lambda_handler(event, context):
     dynamodb = boto3.resource('dynamodb', region_name='eu-west-1')
     table = dynamodb.Table('reaktor-observations')
     
-    response = table.scan()
-    data = response['Items']
+    body = json.loads(event['body'])
     
-    while 'LastEvaluatedKey' in response:
-        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-        data.extend(response['Items'])
-    
+    for item in body['Items']:
+        table.delete_item(
+            Key={
+                'id': item['id']
+            }
+        )
     return {
         'statusCode': 200,
         'headers': {
             'Access-Control-Allow-Origin' : '*',
-        },
-        'body': json.dumps(data)
+        }
     }

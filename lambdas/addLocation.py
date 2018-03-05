@@ -1,43 +1,43 @@
 import boto3
 import json
 import uuid
-from datetime import datetime
 
 def create_response(body=None, error=None):
     if error is None:
         return {
-            "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin" : "*",
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin' : '*',
             },
-            "body": body
+            'body': json.dumps(body)
         }
     else:
         return {
-            "statusCode": 400,
-            "headers": {
-                "Access-Control-Allow-Origin" : "*",
+            'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin' : '*',
             },
-            "error": error
+            'error': json.dumps(error)
         }
 
 def lambda_handler(event, context): 
     dynamodb = boto3.resource('dynamodb', region_name='eu-west-1')
-    table = dynamodb.Table('reaktor-observations')
+    table = dynamodb.Table('reaktor-locations')
+
+    item = json.loads(event['body'])['Item']
+    if not item['xCoord'].replace('.','',1).lstrip('-+').isnumeric() or not item['yCoord'].replace('.','',1).lstrip('-+').isnumeric():
+        return create_response(error={'error': 'Invalid coordinates.', 'item': item})
+    if not item['name'].isalnum():
+        return create_response(error={'error': 'Location name must be alphanumeric', 'item': item})
     
-    body = json.loads(event['body'])
-    if not body['Item']['xCoord'].replace('.','',1).isnumeric() or not body['Item']['yCoord'].replace('.','',1).isnumeric():
-        return create_response(error="Invalid coordinates.")
-    if not body['Item']['name'].isalnum():
-        return create_response(error="Location name must be alphanumeric")
-    
-    table.put_item(
-        Item={
+    newItem = {
             'id': uuid.uuid1().hex,
-            'name': body['Item']['name'],
-            'xCoord': body['Item']['xCoord'],
-            'yCoord': body['Item']['yCoord']
+            'name': item['name'],
+            'xCoord': item['xCoord'],
+            'yCoord': item['yCoord']
             }
+    table.put_item(
+        Item = newItem
         )
     
-    return create_response(body="Location added.")
+    return create_response(body={'message': 'Location added.', 'Item': newItem})

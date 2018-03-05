@@ -1,0 +1,22 @@
+POST https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/observation
+Content-Type: application/json
+
+{
+    "Item": {
+        "locationId": "1",
+        "temperature": "15",
+        "temperatureScale": "celcius"
+    }
+}
+
+      
+POST https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/observation
+Content-Type: application/json
+
+{
+    "Item": {
+        "locationId": "1",
+        "temperature": "-5",
+        "temperatureScale": "celcius"
+    }
+}

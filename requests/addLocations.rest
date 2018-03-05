@@ -1,0 +1,32 @@
+POST https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/location
+Content-Type: application/json
+
+{
+    "items": [
+        {
+            "name": "Tokio",
+            "xCoord": "35.6584421",
+            "yCoord": "139.7328635"
+        },
+        {
+            "name": "Helsinki",
+            "xCoord": "60.1697530",
+            "yCoord": "24.9490830"
+        },
+        {
+            "name": "New York",
+            "xCoord": "40.7406905",
+            "yCoord": "-73.9938438"
+        },
+        {
+            "name": "Amsterdam",
+            "xCoord": "52.3650691",
+            "yCoord": "4.9040238"
+        },
+        {
+            "name": "Dubai",
+            "xCoord": "25.092535",
+            "yCoord": "55.1562243"
+        }
+    ]
+}
