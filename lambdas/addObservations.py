@@ -29,7 +29,7 @@ def lambda_handler(event, context):
     
     with table.batch_writer() as batch:
         for item in body['Items']:
-            if not item['temperature'].lstrip('-+').isnumeric():
+            if not item['temperature'].replace('.','',1).lstrip('-+').isnumeric():
                 return create_response(error={'error':'Temperature has to be numeric.'})
             if item['temperatureScale'] != 'celcius' and item['temperatureScale'] != 'fahrenheit' :
                 return create_response(error={'error':'Temperature scale can only be fahrenheit or celcius'})

@@ -30,7 +30,7 @@ def lambda_handler(event, context):
     if 'temperature' not in item or 'temperatureScale' not in item or 'locationId' not in item or 'temperature' not in item:
         return create_response(error={'error':'Parameter missing', 'item': item})
     
-    if not item['temperature'].lstrip('-+').isnumeric():
+    if not item['temperature'].replace('.','',1).lstrip('-+').isnumeric():
         return create_response(error={'error':'Temperature has to be numeric.'})
     if item['temperatureScale'] != 'celcius' and item['temperatureScale'] != 'fahrenheit' :
         return create_response(error={'error':'Temperature scale can only be fahrenheit or celcius'})
