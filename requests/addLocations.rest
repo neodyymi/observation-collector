@@ -1,4 +1,4 @@
-POST https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/location
+POST https://7jh42r9fj0.execute-api.eu-west-1.amazonaws.com/beta/location/batch
 Content-Type: application/json
 
 {
